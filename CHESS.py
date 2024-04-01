@@ -7,7 +7,8 @@ def DisplayBoard(A8,B8,C8,D8,E8,F8,G8,H8,
                  A4,B4,C4,D4,E4,F4,G4,H4,
                  A3,B3,C3,D3,E3,F3,G3,H3,
                  A2,B2,C2,D2,E2,F2,G2,H2,
-                 A1,B1,C1,D1,E1,F1,G1,H1):
+                 A1,B1,C1,D1,E1,F1,G1,H1,
+                 chessBoard):
     print(chessBoard.format(
                             A8,B8,C8,D8,E8,F8,G8,H8,
                             A7,B7,C7,D7,E7,F7,G7,H7,
@@ -230,7 +231,8 @@ while True:
                  A4,B4,C4,D4,E4,F4,G4,H4,
                  A3,B3,C3,D3,E3,F3,G3,H3,
                  A2,B2,G2,D2,E2,F2,G2,H2,
-                 A1,B1,C1,D1,E1,F1,G1,H1)
+                 A1,B1,C1,D1,E1,F1,G1,H1,
+                 chessBoard)
     startsquare = StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,BLA,WR2,WK,WR1M,WR2M,BR1M,BR2M)
     if startsquare[0] != "Castle":
         endsquare = EndValidation()
