@@ -40,13 +40,13 @@ def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8
                 if colour ==  0:
                     
                     if startSquare == "CK":
-                        if F1 == " " and G1 == " " and WKM == False and WR2M == False:
+                        if F1 == " " and G1 == " " and WKM == True and WR2M == True:
                             return ("Castle","WK")
                         else:
                             print("Castle could not be completed due to one of two reasons \nF1 and G1 are not empty or King or Knight has already moved")
                     
                     else:
-                        if B1 == " " and C1 == " " and D1 == " " and WKM == False and WR1M == False:
+                        if B1 == " " and C1 == " " and D1 == " " and WKM == True and WR1M == True:
                             return ("Castle","WQ")
                         else:
                             print("Castle could not be completed due to one of two reasons \nB1 C1 and D1 are not empty or King or Knight has already moved")
@@ -54,13 +54,13 @@ def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8
                 if colour == 1:
                     
                     if startSquare == "CK":
-                        if F8 == " " and G8 == " " and BKM == False and BR2M == False:
+                        if F8 == " " and G8 == " " and BKM == True and BR2M == True:
                             return ("Castle","BK")
                         else:
                             print("Castle could not be completed due to one of two reasons \nF8 and G8 are not empty or King or Knight has already moved")
                     
                     else:
-                        if B8 == " " and C8 == " " and D8 == " " and BKM ==  False and BR1M == False:
+                        if B8 == " " and C8 == " " and D8 == " " and BKM == True and BR1M == True:
                             return ("Castle","BQ")
                         else:
                             print("Castle could not be completed due to one of two reasons \nB8 C8 and D8 are not empty or King or Knight has already moved")
@@ -83,9 +83,9 @@ def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8
                     elif colour == 1 and globals()[startSquare][0] == "B":
                         if globals()[startSquare]=="BK":
                             BKM = True
-                        elif startSquare=="A8":
+                        elif startSquare == "A8":
                             BR1M = True
-                        elif startSquare=="H8":
+                        elif startSquare == "H8":
                             BR2M = True
                         break
                     else:
@@ -111,6 +111,8 @@ def EndValidation():
 #VARIABLES
 
 chessBoard = " \n   ---A-----B-----C-----D-----E-----F-----G-----H---\n 8 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 7 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 6 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 5 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 4 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 3 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 2 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | ------------------------------------------------- \n 1 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|\n   -------------------------------------------------"
+
+global WKM , BKM , WR1M , WR2M , BR1M , BR2M
 
 WKM = False
 BKM = False
@@ -244,7 +246,7 @@ while True:
                  A2,B2,G2,D2,E2,F2,G2,H2,
                  A1,B1,C1,D1,E1,F1,G1,H1,
                  chessBoard)
-    startsquare = StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,BLA,WR2,WK,WR1M,WR2M,BR1M,BR2M)
+    startsquare = StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8,WR1M,WR2M,BR1M,BR2M)
     if startsquare[0] != "Castle":
         
         if globals()[startsquare][-1] == "P":
