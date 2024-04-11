@@ -37,16 +37,16 @@ def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8
             if startSquare in ("CK","CQ"):
                 colour = turn % 2
                 
-                if colour == 0:
+                if colour ==  0:
                     
                     if startSquare == "CK":
-                        if F1 == " " and G1 == " " and WKM == 0 and WR2M == 0:
+                        if F1 == " " and G1 == " " and WKM == False and WR2M == False:
                             return ("Castle","WK")
                         else:
                             print("Castle could not be completed due to one of two reasons \nF1 and G1 are not empty or King or Knight has already moved")
                     
                     else:
-                        if B1 == " " and C1 == " " and D1 == " " and WKM == 0 and WR1M == 0:
+                        if B1 == " " and C1 == " " and D1 == " " and WKM == False and WR1M == False:
                             return ("Castle","WQ")
                         else:
                             print("Castle could not be completed due to one of two reasons \nB1 C1 and D1 are not empty or King or Knight has already moved")
@@ -54,13 +54,13 @@ def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8
                 if colour == 1:
                     
                     if startSquare == "CK":
-                        if F8 == " " and G8 == " " and BKM == 0 and BR2M == 0:
+                        if F8 == " " and G8 == " " and BKM == False and BR2M == False:
                             return ("Castle","BK")
                         else:
                             print("Castle could not be completed due to one of two reasons \nF8 and G8 are not empty or King or Knight has already moved")
                     
                     else:
-                        if B8 == " " and C8 == " " and D8 == " " and BKM == 0 and BR1M == 0:
+                        if B8 == " " and C8 == " " and D8 == " " and BKM ==  False and BR1M == False:
                             return ("Castle","BQ")
                         else:
                             print("Castle could not be completed due to one of two reasons \nB8 C8 and D8 are not empty or King or Knight has already moved")
@@ -71,22 +71,22 @@ def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8
                 else:
                     colour = turn%2
                     
-                    if colour == 0 and globals()[startSquare][0] == "W":
+                    if colour ==  0 and globals()[startSquare][0] == "W":
                         if globals()[startSquare]=="WK":
-                            WKM += 1
+                            WKM = True
                         elif startSquare=="A1":
-                            WR1M += 1
+                            WR1M = True
                         elif startSquare == "H1":
-                            WR2M += 1
+                            WR2M = True
                         break
                     
                     elif colour == 1 and globals()[startSquare][0] == "B":
                         if globals()[startSquare]=="BK":
-                            BKM += 1
+                            BKM = True
                         elif startSquare=="A8":
-                            BR1M += 1
+                            BR1M = True
                         elif startSquare=="H8":
-                            BR2M += 1
+                            BR2M = True
                         break
                     else:
                         print("Piece is not yours")
@@ -112,12 +112,12 @@ def EndValidation():
 
 chessBoard = " \n   ---A-----B-----C-----D-----E-----F-----G-----H---\n 8 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 7 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 6 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 5 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 4 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 3 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 2 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | ------------------------------------------------- \n 1 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|\n   -------------------------------------------------"
 
-WKM = 0
-BKM = 0
-WR1M = 0
-WR2M = 0
-BR1M = 0
-BR2M = 0
+WKM = False
+BKM = False
+WR1M = False
+WR2M = False
+BR1M = False
+BR2M = False
 
 
 BLA = " "
@@ -230,7 +230,7 @@ F1 = WB2
 G1 = WN2
 H1 = WR2
 
-turn = 0
+turn =  0
 
 #MAIN
 
