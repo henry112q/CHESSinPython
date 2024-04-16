@@ -9,6 +9,7 @@ def DisplayBoard(A8,B8,C8,D8,E8,F8,G8,H8,
                  A2,B2,C2,D2,E2,F2,G2,H2,
                  A1,B1,C1,D1,E1,F1,G1,H1,
                  chessBoard):
+
     print(chessBoard.format(
                             A8,B8,C8,D8,E8,F8,G8,H8,
                             A7,B7,C7,D7,E7,F7,G7,H7,
@@ -20,36 +21,37 @@ def DisplayBoard(A8,B8,C8,D8,E8,F8,G8,H8,
                             A1,B1,C1,D1,E1,F1,G1,H1))
 
 def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8):
+
     while True:
         
         startSquare = input("Choose the coordinates of the piece you which to move: ").upper()
         
-        if startSquare in ("A1","A2","A3","A4","A5","A6","A7","A8",
-                           "B1","B2","B3","B4","B5","B6","B7","B8",
-                           "C1","C2","C3","C4","C5","C6","C7","C8",
-                           "D1","D2","D3","D4","D5","D6","D7","D8",
-                           "E1","E2","E3","E4","E5","E6","E7","E8",
-                           "F1","F2","F3","F4","F5","F6","F7","F8",
-                           "G1","G2","G3","G4","G5","G6","G7","G8",
-                           "H1","H2","H3","H4","H5","H6","H7","H8",
-                           "CK","CQ"):
+        if startSquare not in  ("A1","A2","A3","A4","A5","A6","A7","A8",
+                                "B1","B2","B3","B4","B5","B6","B7","B8",
+                                "C1","C2","C3","C4","C5","C6","C7","C8",
+                                "D1","D2","D3","D4","D5","D6","D7","D8",
+                                "E1","E2","E3","E4","E5","E6","E7","E8",
+                                "F1","F2","F3","F4","F5","F6","F7","F8",
+                                "G1","G2","G3","G4","G5","G6","G7","G8",
+                                "H1","H2","H3","H4","H5","H6","H7","H8",
+                                "CK","CQ"):
             
             if startSquare in ("CK","CQ"):
-                colour = turn % 2
+                
+                colour = turn % 2 # Tells the program which players turn it is White = 0 Black = 1
                 
                 if colour ==  0:
                     
                     if startSquare == "CK":
                         if F1 == " " and G1 == " " and WKM == True and WR2M == True:
-                            return ("Castle","WK")
+                            return ("Castle","WK") 
                         else:
                             print("Castle could not be completed due to one of two reasons \nF1 and G1 are not empty or King or Knight has already moved")
                     
                     else:
                         if B1 == " " and C1 == " " and D1 == " " and WKM == True and WR1M == True:
                             return ("Castle","WQ")
-                        else:
-                            print("Castle could not be completed due to one of two reasons \nB1 C1 and D1 are not empty or King or Knight has already moved")
+                        else: print("Castle could not be completed due to one of two reasons \nB1 C1 and D1 are not empty or King or Knight has already moved")
                 
                 if colour == 1:
                     
@@ -249,6 +251,8 @@ while True:
     startsquare = StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8)
     if startsquare[0] != "Castle":
         
+        # Check piece type for piece validation 
+
         if globals()[startsquare][-1] == "P":
             typeOfPiece = "P"
         elif globals()[startsquare][-1] == "R":
@@ -261,6 +265,8 @@ while True:
             typeOfPiece = "K"
         elif globals()[startsquare][-1] == "Q":
             typeOfPiece = "Q" 
+        else:
+            break
         
         endsquare = EndValidation()
         piece = globals()[startsquare]
@@ -293,5 +299,8 @@ while True:
             C8 = BR1
             E8 = BLA
             A8 = BLA
+        
+        else:
+            break
     
     turn += 1
