@@ -20,6 +20,61 @@ def DisplayBoard(A8,B8,C8,D8,E8,F8,G8,H8,
                             A2,B2,C2,D2,E2,F2,G2,H2,
                             A1,B1,C1,D1,E1,F1,G1,H1))
 
+def castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn):
+    colour = turn % 2 #Tells the program which players turn it is White = 0 Black = 1
+
+    if colour ==  0:
+    
+        if startSquare == "CK":
+            if F1 == " " and G1 == " " and WKM == True and WR2M == True:
+                return ("Castle","WK") 
+            else:
+                print("Castle could not be completed due to one of two reasons \nF1 and G1 are not empty or King or Knight has already moved")
+    
+        else:
+            if B1 == " " and C1 == " " and D1 == " " and WKM == True and WR1M == True:
+                return ("Castle","WQ")
+            else: print("Castle could not be completed due to one of two reasons \nB1 C1 and D1 are not empty or King or Knight has already moved")
+
+    if colour == 1:
+        
+        if startSquare == "CK":
+            if F8 == " " and G8 == " " and BKM == True and BR2M == True:
+                return ("Castle","BK")
+            else:
+                print("Castle could not be completed due to one of two reasons \nF8 and G8 are not empty or King or Knight has already moved")
+        
+        else:
+            if B8 == " " and C8 == " " and D8 == " " and BKM == True and BR1M == True:
+                return ("Castle","BQ")
+            else:
+                print("Castle could not be completed due to one of two reasons \nB8 C8 and D8 are not empty or King or Knight has already moved")
+
+    else:
+        print("FATAL ERROR IN CASTLINGVALIDAT")
+        quit()
+def colourcheck(turn,startSquare):
+    colour = turn%2
+    
+    if colour ==  0 and globals()[startSquare][0] == "W":
+        if globals()[startSquare]=="WK":
+            WKM = True
+        elif startSquare=="A1":
+            WR1M = True
+        elif startSquare == "H1":
+            WR2M = True
+        return True    
+    elif colour == 1 and globals()[startSquare][0] == "B":
+        if globals()[startSquare]=="BK":
+            BKM = True
+        elif startSquare == "A8":
+            BR1M = True
+        elif startSquare == "H8":
+            BR2M = True
+        return True
+    else:
+        print("Piece is not yours")
+        return False
 def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8):
 
     while True:
@@ -38,62 +93,22 @@ def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8
             
             if startSquare in ("CK","CQ"):
                 
-                colour = turn % 2 # Tells the program which players turn it is White = 0 Black = 1
-                
-                if colour ==  0:
-                    
-                    if startSquare == "CK":
-                        if F1 == " " and G1 == " " and WKM == True and WR2M == True:
-                            return ("Castle","WK") 
-                        else:
-                            print("Castle could not be completed due to one of two reasons \nF1 and G1 are not empty or King or Knight has already moved")
-                    
-                    else:
-                        if B1 == " " and C1 == " " and D1 == " " and WKM == True and WR1M == True:
-                            return ("Castle","WQ")
-                        else: print("Castle could not be completed due to one of two reasons \nB1 C1 and D1 are not empty or King or Knight has already moved")
-                
-                if colour == 1:
-                    
-                    if startSquare == "CK":
-                        if F8 == " " and G8 == " " and BKM == True and BR2M == True:
-                            return ("Castle","BK")
-                        else:
-                            print("Castle could not be completed due to one of two reasons \nF8 and G8 are not empty or King or Knight has already moved")
-                    
-                    else:
-                        if B8 == " " and C8 == " " and D8 == " " and BKM == True and BR1M == True:
-                            return ("Castle","BQ")
-                        else:
-                            print("Castle could not be completed due to one of two reasons \nB8 C8 and D8 are not empty or King or Knight has already moved")
+                castling = castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn)
+                return castling
             else:
                 
                 if globals()[startSquare] == " ":
                     print("No piece at this Coordnate")
+                    Movevalidation = False
                 else:
-                    colour = turn%2
+
+                    Movevalidation = colourcheck(turn,startSquare)
                     
-                    if colour ==  0 and globals()[startSquare][0] == "W":
-                        if globals()[startSquare]=="WK":
-                            WKM = True
-                        elif startSquare=="A1":
-                            WR1M = True
-                        elif startSquare == "H1":
-                            WR2M = True
-                        break
-                    
-                    elif colour == 1 and globals()[startSquare][0] == "B":
-                        if globals()[startSquare]=="BK":
-                            BKM = True
-                        elif startSquare == "A8":
-                            BR1M = True
-                        elif startSquare == "H8":
-                            BR2M = True
-                        break
-                    else:
-                        print("Piece is not yours")
+                if Movevalidation == True:
+                    break
         else:
             print("Coordnate dose not exist")
+            
     return startSquare
 
 def EndValidation():
