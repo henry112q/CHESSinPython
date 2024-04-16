@@ -26,15 +26,15 @@ def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8
         
         startSquare = input("Choose the coordinates of the piece you which to move: ").upper()
         
-        if startSquare not in  ("A1","A2","A3","A4","A5","A6","A7","A8",
-                                "B1","B2","B3","B4","B5","B6","B7","B8",
-                                "C1","C2","C3","C4","C5","C6","C7","C8",
-                                "D1","D2","D3","D4","D5","D6","D7","D8",
-                                "E1","E2","E3","E4","E5","E6","E7","E8",
-                                "F1","F2","F3","F4","F5","F6","F7","F8",
-                                "G1","G2","G3","G4","G5","G6","G7","G8",
-                                "H1","H2","H3","H4","H5","H6","H7","H8",
-                                "CK","CQ"):
+        if startSquare in  ("A1","A2","A3","A4","A5","A6","A7","A8",
+                            "B1","B2","B3","B4","B5","B6","B7","B8",
+                            "C1","C2","C3","C4","C5","C6","C7","C8",
+                            "D1","D2","D3","D4","D5","D6","D7","D8",
+                            "E1","E2","E3","E4","E5","E6","E7","E8",
+                            "F1","F2","F3","F4","F5","F6","F7","F8",
+                            "G1","G2","G3","G4","G5","G6","G7","G8",
+                            "H1","H2","H3","H4","H5","H6","H7","H8",
+                            "CK","CQ"):
             
             if startSquare in ("CK","CQ"):
                 
@@ -269,6 +269,7 @@ while True:
             break
         
         endsquare = EndValidation()
+        
         piece = globals()[startsquare]
         globals()[startsquare] = BLA
         globals()[endsquare] = piece
