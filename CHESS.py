@@ -19,7 +19,7 @@ def DisplayBoard(A8,B8,C8,D8,E8,F8,G8,H8,
                             A2,B2,C2,D2,E2,F2,G2,H2,
                             A1,B1,C1,D1,E1,F1,G1,H1))
 
-def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8,WR1M,WR2M,BR1M,BR2M):
+def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8):
     while True:
         
         startSquare = input("Choose the coordinates of the piece you which to move: ").upper()
@@ -246,7 +246,7 @@ while True:
                  A2,B2,G2,D2,E2,F2,G2,H2,
                  A1,B1,C1,D1,E1,F1,G1,H1,
                  chessBoard)
-    startsquare = StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8,WR1M,WR2M,BR1M,BR2M)
+    startsquare = StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8)
     if startsquare[0] != "Castle":
         
         if globals()[startsquare][-1] == "P":
