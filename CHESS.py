@@ -49,10 +49,12 @@ def castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn):
                 return ("Castle","BQ")
             else:
                 print("Castle could not be completed due to one of two reasons \nB8 C8 and D8 are not empty or King or Knight has already moved")
-
+                
     else:
         print("FATAL ERROR IN CASTLINGVALIDAT")
         quit()
+    return False
+
 def colourcheck(turn,startSquare):
     colour = turn%2
     
@@ -94,7 +96,8 @@ def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8
             if startSquare in ("CK","CQ"):
                 
                 castling = castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn)
-                return castling
+                if castling != False:
+                    return castling
             else:
                 
                 if globals()[startSquare] == " ":
