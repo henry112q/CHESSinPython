@@ -21,6 +21,9 @@ def DisplayBoard(A8,B8,C8,D8,E8,F8,G8,H8,
                             A1,B1,C1,D1,E1,F1,G1,H1))
 
 class Pieces:
+    
+    def PawnValidate(startSquare,endSquare):
+        return True
 
     def RookMoveValidate(startSquare,endSquare):
         if startSquare[0] == endSquare[0] or startSquare[-1] == endSquare[-1]:
@@ -57,16 +60,19 @@ class Pieces:
                     if globals()[chr(x)+startSquare[-1]] != " ":
                         print("Piece in way")
                         return False
+                    
             elif endToStart == True and lettersChange == True:
                 for x in range(end+1,start-1):
                     if globals()[chr(x)+startSquare[-1]] != " ":
                         print("Piece in way")
                         return False
+                    
             elif startToEnd == True and numberChange == True:
                 for x in range(start+1,end):
                     if globals()[startSquare[0]+str(x)] != " ":
                         print("Piece in way")
                         return False
+                    
             elif endToStart == True and numberChange == True:
                 for x in range(end+1,start-1):
                     if globals()[startSquare[-1]+str(x)] != " ":
@@ -120,14 +126,15 @@ class Pieces:
 def colourcheck(turn,startSquare):
     colour = turn%2
     
-    if colour ==  0 and globals()[startSquare][0] == "W":
-        if globals()[startSquare]=="WK":
+    if colour ==  0 and globals()[startSquare][0] == "W": # checks that the colour and piece match
+        if globals()[startSquare]=="WK": # checks the piece and update White King move white rook 1 move or white rook 2 move if nessacary the elif for colour == 2 is the same
             WKM = True
         elif startSquare=="A1":
             WR1M = True
         elif startSquare == "H1":
             WR2M = True
         return True    
+    
     elif colour == 1 and globals()[startSquare][0] == "B":
         if globals()[startSquare]=="BK":
             BKM = True
@@ -136,6 +143,7 @@ def colourcheck(turn,startSquare):
         elif startSquare == "H8":
             BR2M = True
         return True
+    
     else:
         print("Piece is not yours")
         return False
@@ -311,7 +319,6 @@ E2 = WP5
 F2 = WP6
 G2 = WP7
 H2 = WP8
-
 
 A1 = WR1
 B1 = WN1
