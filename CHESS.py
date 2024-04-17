@@ -51,7 +51,7 @@ def castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn):
                 print("Castle could not be completed due to one of two reasons \nB8 C8 and D8 are not empty or King or Knight has already moved")
                 
     else:
-        print("FATAL ERROR IN CASTLINGVALIDAT")
+        print("FATAL ERROR IN CASTLING VALIDATE")
         quit()
     return False
 
@@ -77,6 +77,14 @@ def colourcheck(turn,startSquare):
     else:
         print("Piece is not yours")
         return False
+
+def RookMoveValidate(startSquare,endSquare):
+    if startSquare[0] == endSquare[0] or startSquare[-1] == endSquare[-1]:
+        return True
+    else:
+        print("Piece can not move there")
+        return False
+
 def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8):
 
     while True:
@@ -114,7 +122,7 @@ def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8
             
     return startSquare
 
-def EndValidation():
+def EndValidation(startSquare,Piece):
     while True:
         endSquare = input("Choose the coordinates of the location you want to move to: ").upper()
         if endSquare in ("A1","A2","A3","A4","A5","A6","A7","A8",
@@ -125,7 +133,15 @@ def EndValidation():
                          "F1","F2","F3","F4","F5","F6","F7","F8",
                          "G1","G2","G3","G4","G5","G6","G7","G8",
                          "H1","H2","H3","H4","H5","H6","H7","H8"):
-            break
+            if Piece == "R":
+                succses = RookMoveValidate(startSquare,endSquare)
+            else:
+                succses = True
+            if succses == True:
+                break
+            elif succses != True or succses != False:
+                print("FATAL ERROR VARIABLE NOT TRUE OR FALSE #143")
+                quit()
     return endSquare
 
 #VARIABLES
@@ -284,9 +300,10 @@ while True:
         elif globals()[startsquare][-1] == "Q":
             typeOfPiece = "Q" 
         else:
+            print("FATAL ERROR PIECE TYPE DOSE NOT EXIST")
             break
         
-        endsquare = EndValidation()
+        endsquare = EndValidation(startsquare,typeOfPiece)
         
         piece = globals()[startsquare]
         globals()[startsquare] = BLA
