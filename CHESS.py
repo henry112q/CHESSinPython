@@ -20,40 +20,102 @@ def DisplayBoard(A8,B8,C8,D8,E8,F8,G8,H8,
                             A2,B2,C2,D2,E2,F2,G2,H2,
                             A1,B1,C1,D1,E1,F1,G1,H1))
 
-def castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn):
-    colour = turn % 2 #Tells the program which players turn it is White = 0 Black = 1
+class Pieces:
 
-    if colour ==  0:
-    
-        if startSquare == "CK":
-            if F1 == " " and G1 == " " and WKM == True and WR2M == True:
-                return ("Castle","WK") 
+    def RookMoveValidate(startSquare,endSquare):
+        if startSquare[0] == endSquare[0] or startSquare[-1] == endSquare[-1]:
+            if startSquare[0] != endSquare[0]:
+                lettersChange = True
+                numberChange = False
+            elif startSquare[-1] != endSquare[-1]:
+                lettersChange = False
+                numberChange = True
             else:
-                print("Castle could not be completed due to one of two reasons \nF1 and G1 are not empty or King or Knight has already moved")
-    
+                quit("FATAL ERROR ROOKMOVEVAILDATE NO CHANGE IN LETTERS OR NUMBER #90")
+            
+            if lettersChange == True:
+                start = int(ord(startSquare[0]))
+                end = int(ord(endSquare[0]))
+            else:
+                start = int(startSquare[-1])
+                end = int(endSquare[-1])
+            
+            if start < end:
+                startToEnd = True
+                endToStart = False
+            elif end > start:
+                startToEnd = False
+                endToStart = True
+            elif start == end:
+                print("Piece already at selected square")
+                return False
+            else:
+                quit("FATAL ERROR #110")
+            
+            if startToEnd == True and lettersChange == True:
+                for x in range(start+1,end):
+                    if globals()[chr(x)+startSquare[-1]] != " ":
+                        print("Piece in way")
+                        return False
+            elif endToStart == True and lettersChange == True:
+                for x in range(end+1,start-1):
+                    if globals()[chr(x)+startSquare[-1]] != " ":
+                        print("Piece in way")
+                        return False
+            elif startToEnd == True and numberChange == True:
+                for x in range(start+1,end):
+                    if globals()[startSquare[0]+str(x)] != " ":
+                        print("Piece in way")
+                        return False
+            elif endToStart == True and numberChange == True:
+                for x in range(end+1,start-1):
+                    if globals()[startSquare[-1]+str(x)] != " ":
+                        print("Piece in way")
+                        return False
+            else:
+                quit("FATAL ERROR #126")
+                    
+            return True
         else:
-            if B1 == " " and C1 == " " and D1 == " " and WKM == True and WR1M == True:
-                return ("Castle","WQ")
-            else: print("Castle could not be completed due to one of two reasons \nB1 C1 and D1 are not empty or King or Knight has already moved")
+            print("Piece can not move there")
+            return False
 
-    if colour == 1:
+
+
+    def castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn):
+        colour = turn % 2 #Tells the program which players turn it is White = 0 Black = 1
+
+        if colour ==  0:
         
-        if startSquare == "CK":
-            if F8 == " " and G8 == " " and BKM == True and BR2M == True:
-                return ("Castle","BK")
+            if startSquare == "CK":
+                if F1 == " " and G1 == " " and WKM == True and WR2M == True:
+                    return ("Castle","WK") 
+                else:
+                    print("Castle could not be completed due to one of two reasons \nF1 and G1 are not empty or King or Knight has already moved")
+        
             else:
-                print("Castle could not be completed due to one of two reasons \nF8 and G8 are not empty or King or Knight has already moved")
-        
+                if B1 == " " and C1 == " " and D1 == " " and WKM == True and WR1M == True:
+                    return ("Castle","WQ")
+                else: print("Castle could not be completed due to one of two reasons \nB1 C1 and D1 are not empty or King or Knight has already moved")
+
+        if colour == 1:
+            
+            if startSquare == "CK":
+                if F8 == " " and G8 == " " and BKM == True and BR2M == True:
+                    return ("Castle","BK")
+                else:
+                    print("Castle could not be completed due to one of two reasons \nF8 and G8 are not empty or King or Knight has already moved")
+            
+            else:
+                if B8 == " " and C8 == " " and D8 == " " and BKM == True and BR1M == True:
+                    return ("Castle","BQ")
+                else:
+                    print("Castle could not be completed due to one of two reasons \nB8 C8 and D8 are not empty or King or Knight has already moved")
+                    
         else:
-            if B8 == " " and C8 == " " and D8 == " " and BKM == True and BR1M == True:
-                return ("Castle","BQ")
-            else:
-                print("Castle could not be completed due to one of two reasons \nB8 C8 and D8 are not empty or King or Knight has already moved")
-                
-    else:
-        quit("FATAL ERROR IN CASTLING VALIDATE")
-        quit()
-    return False
+            quit("FATAL ERROR IN CASTLING VALIDATE")
+            quit()
+        return False
 
 def colourcheck(turn,startSquare):
     colour = turn%2
@@ -78,64 +140,6 @@ def colourcheck(turn,startSquare):
         print("Piece is not yours")
         return False
 
-def RookMoveValidate(startSquare,endSquare):
-    if startSquare[0] == endSquare[0] or startSquare[-1] == endSquare[-1]:
-        if startSquare[0] != endSquare[0]:
-            lettersChange = True
-            numberChange = False
-        elif startSquare[-1] != endSquare[-1]:
-            lettersChange = False
-            numberChange = True
-        else:
-            quit("FATAL ERROR ROOKMOVEVAILDATE NO CHANGE IN LETTERS OR NUMBER #90")
-        
-        if lettersChange == True:
-            start = int(ord(startSquare[0]))
-            end = int(ord(endSquare[0]))
-        else:
-            start = int(startSquare[-1])
-            end = int(endSquare[-1])
-        
-        if start < end:
-            startToEnd = True
-            endToStart = False
-        elif end > start:
-            startToEnd = False
-            endToStart = True
-        elif start == end:
-            print("Piece already at selected square")
-            return False
-        else:
-            quit("FATAL ERROR #110")
-        
-        if startToEnd == True and lettersChange == True:
-            for x in range(start+1,end):
-                if globals()[chr(x)+startSquare[-1]] != " ":
-                    print("Piece in way")
-                    return False
-        elif endToStart == True and lettersChange == True:
-            for x in range(end+1,start-1):
-                if globals()[chr(x)+startSquare[-1]] != " ":
-                    print("Piece in way")
-                    return False
-        elif startToEnd == True and numberChange == True:
-            for x in range(start+1,end):
-                if globals()[startSquare[0]+str(x)] != " ":
-                    print("Piece in way")
-                    return False
-        elif endToStart == True and numberChange == True:
-            for x in range(end+1,start-1):
-                if globals()[startSquare[-1]+str(x)] != " ":
-                    print("Piece in way")
-                    return False
-        else:
-            quit("FATAL ERROR #126")
-                
-        return True
-    else:
-        print("Piece can not move there")
-        return False
-
 def StartValidation(turn,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8):
 
     while True:
@@ -154,7 +158,7 @@ def StartValidation(turn,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8):
             
             if startSquare in ("CK","CQ"):
                 
-                castling = castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn)
+                castling =  Pieces.castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn)
                 if castling != False:
                     return castling
             else:
@@ -184,7 +188,7 @@ def EndValidation(startSquare,Piece):
                          "G1","G2","G3","G4","G5","G6","G7","G8",
                          "H1","H2","H3","H4","H5","H6","H7","H8"):
             if Piece == "R":
-                succses = RookMoveValidate(startSquare,endSquare)
+                succses = Pieces.RookMoveValidate(startSquare,endSquare)
             else:
                 succses = True
             if succses == True:
