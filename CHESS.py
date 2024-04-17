@@ -111,18 +111,22 @@ def RookMoveValidate(startSquare,endSquare):
         if startToEnd == True and lettersChange == True:
             for x in range(start+1,end):
                 if globals()[chr(x)+startSquare[-1]] != " ":
+                    print("Piece in way")
                     return False
         elif endToStart == True and lettersChange == True:
             for x in range(end+1,start-1):
                 if globals()[chr(x)+startSquare[-1]] != " ":
+                    print("Piece in way")
                     return False
         elif startToEnd == True and numberChange == True:
             for x in range(start+1,end):
-                if globals()[startSquare[0]+x] != " ":
+                if globals()[startSquare[0]+str(x)] != " ":
+                    print("Piece in way")
                     return False
         elif endToStart == True and numberChange == True:
             for x in range(end+1,start-1):
-                if globals()[startSquare[-1]+x] != " ":
+                if globals()[startSquare[-1]+str(x)] != " ":
+                    print("Piece in way")
                     return False
         else:
             quit("FATAL ERROR #126")
@@ -317,6 +321,8 @@ H1 = WR2
 turn =  0
 
 #MAIN
+welcome = "{:^60}\n{:^60}\n{:^60}\n{:^60}\n{:^60}"
+print(welcome.format("Welcome to the Chess game in python ","To move first enter the current coordantes of the piece","When the location is accepted it can not be changed","Then enter the coordnates of where you want to move","the board will then update for the next turn"))
 
 while True:
     DisplayBoard(A8,B8,C8,D8,E8,F8,G8,H8,
