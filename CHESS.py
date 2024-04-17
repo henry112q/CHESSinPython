@@ -51,7 +51,7 @@ def castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn):
                 print("Castle could not be completed due to one of two reasons \nB8 C8 and D8 are not empty or King or Knight has already moved")
                 
     else:
-        print("FATAL ERROR IN CASTLING VALIDATE")
+        quit("FATAL ERROR IN CASTLING VALIDATE")
         quit()
     return False
 
@@ -80,12 +80,59 @@ def colourcheck(turn,startSquare):
 
 def RookMoveValidate(startSquare,endSquare):
     if startSquare[0] == endSquare[0] or startSquare[-1] == endSquare[-1]:
+        if startSquare[0] != endSquare[0]:
+            lettersChange = True
+            numberChange = False
+        elif startSquare[-1] != endSquare[-1]:
+            lettersChange = False
+            numberChange = True
+        else:
+            quit("FATAL ERROR ROOKMOVEVAILDATE NO CHANGE IN LETTERS OR NUMBER #90")
+        
+        if lettersChange == True:
+            start = int(ord(startSquare[0]))
+            end = int(ord(endSquare[0]))
+        else:
+            start = int(startSquare[-1])
+            end = int(endSquare[-1])
+        
+        if start < end:
+            startToEnd = True
+            endToStart = False
+        elif end > start:
+            startToEnd = False
+            endToStart = True
+        elif start == end:
+            print("Piece already at selected square")
+            return False
+        else:
+            quit("FATAL ERROR #110")
+        
+        if startToEnd == True and lettersChange == True:
+            for x in range(start+1,end):
+                if globals()[chr(x)+startSquare[-1]] != " ":
+                    return False
+        elif endToStart == True and lettersChange == True:
+            for x in range(end+1,start-1):
+                if globals()[chr(x)+startSquare[-1]] != " ":
+                    return False
+        elif startToEnd == True and numberChange == True:
+            for x in range(start+1,end):
+                if globals()[startSquare[0]+x] != " ":
+                    return False
+        elif endToStart == True and numberChange == True:
+            for x in range(end+1,start-1):
+                if globals()[startSquare[-1]+x] != " ":
+                    return False
+        else:
+            quit("FATAL ERROR #126")
+                
         return True
     else:
         print("Piece can not move there")
         return False
 
-def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8):
+def StartValidation(turn,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8):
 
     while True:
         
@@ -112,7 +159,6 @@ def StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8
                     print("No piece at this Coordnate")
                     Movevalidation = False
                 else:
-                    
                     Movevalidation = colourcheck(turn,startSquare)
                     
                 if Movevalidation == True:
@@ -140,7 +186,7 @@ def EndValidation(startSquare,Piece):
             if succses == True:
                 break
             elif succses != True and succses != False:
-                print("FATAL ERROR VARIABLE NOT TRUE OR FALSE #143")
+                quit("FATAL ERROR VARIABLE NOT TRUE OR FALSE #143")
                 quit()
     return endSquare
 
@@ -282,7 +328,7 @@ while True:
                  A2,B2,G2,D2,E2,F2,G2,H2,
                  A1,B1,C1,D1,E1,F1,G1,H1,
                  chessBoard)
-    startsquare = StartValidation(turn,WKM,BKM,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8)
+    startsquare = StartValidation(turn,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8)
     if startsquare[0] != "Castle":
         
         # Check piece type for piece validation 
@@ -300,7 +346,7 @@ while True:
         elif globals()[startsquare][-1] == "Q":
             typeOfPiece = "Q" 
         else:
-            print("FATAL ERROR PIECE TYPE DOSE NOT EXIST")
+            quit("FATAL ERROR PIECE TYPE DOSE NOT EXIST")
             break
         
         endsquare = EndValidation(startsquare,typeOfPiece)
@@ -319,8 +365,8 @@ while True:
             H1 = BLA
             
         elif castletype == "WQ": 
-            B1 = WK
-            C1 = WR1
+            C1 = WK
+            D1 = WR1
             E1 = BLA
             A1 = BLA
         
@@ -331,8 +377,8 @@ while True:
             H8 = BLA
         
         elif castletype == "BQ": 
-            B8 = BK
-            C8 = BR1
+            C8 = BK
+            D8 = BR1
             E8 = BLA
             A8 = BLA
         
