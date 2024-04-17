@@ -23,6 +23,10 @@ def DisplayBoard(A8,B8,C8,D8,E8,F8,G8,H8,
 class Pieces:
     
     def PawnValidate(startSquare,endSquare):
+        # check if square chossen is 1 ahead or behind unless on rank 2 or 7 then let it be up to 2 ahead or behind
+        # check pawn colour if black let it only advance down and vis-a-versa
+        # run check for enPassent https://en.wikipedia.org/wiki/En_passant
+        # add promation promt if required and implment in main
         return True
 
     def RookMoveValidate(startSquare,endSquare):
