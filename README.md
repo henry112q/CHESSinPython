@@ -1,2 +1,2 @@
-Chess in Python © 2024 by Henry112Q is licensed under Attribution-NonCommercial-ShareAlike 4.0 International
+Chess in Python © 2024 by Henry112Q is licensed under Attribution-NonCommercial-ShareAlike 4.0 International.           
 The Liscense is for the code only
