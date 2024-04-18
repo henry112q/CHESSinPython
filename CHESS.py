@@ -38,7 +38,7 @@ class Pieces:
             if startSquare[-1] in ("2","7"):
                 if globals()[startSquare][0] == "W" and startSquare[-1] == 2 and (endSquare == startSquare[0]+"3" or endSquare == startSquare[0]+"4"):
                     return True , False 
-                elif globals()[startSquare][0] == "B" and startSquare[-1] == 7 and (endSquare == startSquare[0]+str(int(startSquare[-1])-1) or endSquare == startSquare[0]+str(int(startSquare[-1])-2)):
+                elif globals()[startSquare][0] == "B" and startSquare[-1] == 7 and (endSquare == startSquare[0]+"6" or endSquare == startSquare[0]+"5"):
                     return True , False
                 elif globals()[startSquare][0] == "W" and startSquare[-1] == 7 and endSquare == startSquare[0]+str(int(startSquare[-1]+1)):
                     return True , True
