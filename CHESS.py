@@ -27,7 +27,10 @@ class Pieces:
             # check pawn colour if black let it only advance down and vis-a-versa
             # run check for enPassent https://en.wikipedia.org/wiki/En_passant
             # add promation promt if required and implment in main
-            return True
+            if startSquare[-1] not in (2,7,4,5):
+                if endSquare == startSquare[0]+str(int(startSquare[-1]-1)) and globals[startSquare][0]=="W":
+                    return True, False
+            return True , False
     class rooks:
         def RookMoveValidate(startSquare,endSquare):
             if startSquare[0] == endSquare[0] or startSquare[-1] == endSquare[-1]:
@@ -151,64 +154,69 @@ def colourcheck(turn,startSquare):
     else:
         print("Piece is not yours")
         return False
+class moves:
+    def StartValidation(turn,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8):
 
-def StartValidation(turn,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8):
+        while True:
+            
+            startSquare = input("Choose the coordinates of the piece you which to move: ").upper()
+            
+            if startSquare in  ("A1","A2","A3","A4","A5","A6","A7","A8",
+                                "B1","B2","B3","B4","B5","B6","B7","B8",
+                                "C1","C2","C3","C4","C5","C6","C7","C8",
+                                "D1","D2","D3","D4","D5","D6","D7","D8",
+                                "E1","E2","E3","E4","E5","E6","E7","E8",
+                                "F1","F2","F3","F4","F5","F6","F7","F8",
+                                "G1","G2","G3","G4","G5","G6","G7","G8",
+                                "H1","H2","H3","H4","H5","H6","H7","H8",
+                                "CK","CQ"):
+                
+                if startSquare in ("CK","CQ"):
+                    
+                    castling =  castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn)
+                    if castling != False:
+                        return castling
+                else:
+                    
+                    if globals()[startSquare] == " ":
+                        print("No piece at this Coordnate")
+                        Movevalidation = False
+                    else:
+                        Movevalidation = colourcheck(turn,startSquare)
+                        
+                    if Movevalidation == True:
+                        break
+            else:
+                print("Coordnate dose not exist")
+                
+        return startSquare
 
-    while True:
-        
-        startSquare = input("Choose the coordinates of the piece you which to move: ").upper()
-        
-        if startSquare in  ("A1","A2","A3","A4","A5","A6","A7","A8",
+    def EndValidation(startSquare,Piece):
+        while True:
+            endSquare = input("Choose the coordinates of the location you want to move to: ").upper()
+            if endSquare in ("A1","A2","A3","A4","A5","A6","A7","A8",
                             "B1","B2","B3","B4","B5","B6","B7","B8",
                             "C1","C2","C3","C4","C5","C6","C7","C8",
                             "D1","D2","D3","D4","D5","D6","D7","D8",
                             "E1","E2","E3","E4","E5","E6","E7","E8",
                             "F1","F2","F3","F4","F5","F6","F7","F8",
                             "G1","G2","G3","G4","G5","G6","G7","G8",
-                            "H1","H2","H3","H4","H5","H6","H7","H8",
-                            "CK","CQ"):
-            
-            if startSquare in ("CK","CQ"):
-                
-                castling =  castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn)
-                if castling != False:
-                    return castling
-            else:
-                
-                if globals()[startSquare] == " ":
-                    print("No piece at this Coordnate")
-                    Movevalidation = False
+                            "H1","H2","H3","H4","H5","H6","H7","H8"):
+                if Piece == "R":
+                    succses = Pieces.rooks.RookMoveValidate(startSquare,endSquare)
+                elif Piece == "P":
+                    x = Pieces.pawn.PawnValidate(startSquare,endSquare)
+                    succses = x[0]
+                    promote = x[1]
                 else:
-                    Movevalidation = colourcheck(turn,startSquare)
-                    
-                if Movevalidation == True:
+                    succses = True
+                if succses == True:
                     break
-        else:
-            print("Coordnate dose not exist")
+                elif succses != True and succses != False:
+                    quit("FATAL ERROR VARIABLE NOT TRUE OR FALSE #143")
             
-    return startSquare
-
-def EndValidation(startSquare,Piece):
-    while True:
-        endSquare = input("Choose the coordinates of the location you want to move to: ").upper()
-        if endSquare in ("A1","A2","A3","A4","A5","A6","A7","A8",
-                         "B1","B2","B3","B4","B5","B6","B7","B8",
-                         "C1","C2","C3","C4","C5","C6","C7","C8",
-                         "D1","D2","D3","D4","D5","D6","D7","D8",
-                         "E1","E2","E3","E4","E5","E6","E7","E8",
-                         "F1","F2","F3","F4","F5","F6","F7","F8",
-                         "G1","G2","G3","G4","G5","G6","G7","G8",
-                         "H1","H2","H3","H4","H5","H6","H7","H8"):
-            if Piece == "R":
-                succses = Pieces.rooks.RookMoveValidate(startSquare,endSquare)
-            else:
-                succses = True
-            if succses == True:
-                break
-            elif succses != True and succses != False:
-                quit("FATAL ERROR VARIABLE NOT TRUE OR FALSE #143")
-                quit()
-    return endSquare
+        values = endSquare,promote
+        return values
 
 #VARIABLES
 
@@ -349,7 +357,7 @@ while True:
                  A2,B2,G2,D2,E2,F2,G2,H2,
                  A1,B1,C1,D1,E1,F1,G1,H1,
                  chessBoard)
-    startsquare = StartValidation(turn,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8)
+    startsquare = moves.StartValidation(turn,A1,B1,C1,D1,E1,F1,G1,H1,A8,B8,C8,D8,E8,F8,G8,H8)
     if startsquare[0] != "Castle":
         
         # Check piece type for piece validation 
@@ -370,8 +378,9 @@ while True:
             quit("FATAL ERROR PIECE TYPE DOSE NOT EXIST")
 
         
-        endsquare = EndValidation(startsquare,typeOfPiece)
-        
+        x = moves.EndValidation(startsquare,typeOfPiece)
+        endsquare = x[0]
+        promote = x[1]
         piece = globals()[startsquare]
         globals()[startsquare] = BLA
         globals()[endsquare] = piece
