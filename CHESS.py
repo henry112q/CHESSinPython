@@ -27,9 +27,26 @@ class Pieces:
             # check pawn colour if black let it only advance down and vis-a-versa
             # run check for enPassent https://en.wikipedia.org/wiki/En_passant
             # add promation promt if required and implment in main
-            if startSquare[-1] not in (2,7,4,5):
-                if endSquare == startSquare[0]+str(int(startSquare[-1]-1)) and globals[startSquare][0]=="W":
+            if startSquare[-1] not in ("2","7","4","5"):
+                if endSquare == startSquare[0]+str(int(startSquare[-1])-1) and globals()[startSquare][0]=="B":
                     return True, False
+                elif endSquare == startSquare[0]+str(int(startSquare[-1])+1) and globals()[startSquare][0]=="W":
+                    return True, False
+                else:
+                    print("Invalid square selected")
+                    return False , False
+            if startSquare[-1] in ("2","7"):
+                if globals()[startSquare][0] == "W" and startSquare[-1] == 2 and (endSquare == startSquare[0]+"3" or endSquare == startSquare[0]+"4"):
+                    return True , False 
+                elif globals()[startSquare][0] == "B" and startSquare[-1] == 7 and (endSquare == startSquare[0]+str(int(startSquare[-1])-1) or endSquare == startSquare[0]+str(int(startSquare[-1])-2)):
+                    return True , False
+                elif globals()[startSquare][0] == "W" and startSquare[-1] == 7 and endSquare == startSquare[0]+str(int(startSquare[-1]+1)):
+                    return True , True
+                elif globals()[startSquare][0] == "B" and startSquare[-1] == 2 and endSquare == startSquare[0]+str(int(startSquare[-1]-1)):
+                    return True , True
+                else:
+                    print("Invalid move")
+                    return False , False
             return True , False
     class rooks:
         def RookMoveValidate(startSquare,endSquare):
