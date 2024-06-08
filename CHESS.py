@@ -2,8 +2,12 @@ class Main:
     def __init__(self):
         self.CurrentMove = None
         self.LastMove = None
-        self.WhiteCheck = None
-        self.BlackCheck = None
+        self.WhiteKingMove = False
+        self.WhiteLRMove = False
+        self.WhiteRRMove = False
+        self.BlackKingMove = False
+        self.BlackLRMove = False
+        self.BlackRRMove = False
         self.RUNNING = True
         self.Turn = False
         self.PieceArray = [["WR","WN","WB","WQ","WK","WB","WK","WR"],
@@ -24,10 +28,12 @@ class Main:
                 if self.FirstMove.upper() in ("Q","QUIT"):
                     FirstMoveInvalid = False
                     self.RUNNING = False
+                    self.castlingValidation()
             if len(self.FirstMove) != 2:
                 continue
             if self.FirstMove.upper() in ("CK","CQ"):
                 FirstMoveInvalid = False
+                self.CastlingEvent = True
                 continue 
             if self.FirstMove[0].upper() not in ["A","B","C","D","E","F","G","H"] or self.FirstMove[1] not in ["1","2","3","4","5","6","7","8"]:
                 continue
@@ -45,7 +51,12 @@ class Main:
                 continue
             
             FirstMoveInvalid = False
-                        
+        
+    
+    def castlingValidation(self):
+        
+        pass
+         
     def DisplayBoard(self):
         pieces = []
         unchangedArray = self.PieceArray
