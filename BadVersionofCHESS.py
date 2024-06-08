@@ -144,7 +144,6 @@ def castlingvalidate(startSquare,F1,G1,B1,C1,D1,F8,G8,B8,C8,D8,turn):
                 
     else:
         quit("FATAL ERROR IN CASTLING VALIDATE")
-        quit()
     return False
 
 def colourcheck(turn,startSquare):
