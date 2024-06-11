@@ -10,6 +10,7 @@ class Main:
         self.BlackRRMove = False
         self.RUNNING = True
         self.Turn = False
+        self.FirstMoveInvalid = True
         self.PieceArray = [["WR","WN","WB","WQ","WK","WB","WK","WR"],
                            ["WP","WP","WP","WP","WP","WP","WP","WP"],
                            ["  ","  ","  ","  ","  ","  ","  ","  "],
@@ -21,41 +22,70 @@ class Main:
         self.CHESSBOARD = " \n   ---A-----B-----C-----D-----E-----F-----G-----H---\n 8 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 7 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 6 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 5 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 4 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 3 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | -------------------------------------------------\n 2 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}| \n | ------------------------------------------------- \n 1 |{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|{:^5}|\n   ------------------------------------------------- \n"
     
     def MoveInputs(self):
-        FirstMoveInvalid = True
-        while FirstMoveInvalid:
+        self.FirstMoveInvalid = True
+        while self.FirstMoveInvalid:
             self.FirstMove = input("Enter the coordinate of the piece that you want to move: ")
             if self.FirstMove.isalpha() == True:
                 if self.FirstMove.upper() in ("Q","QUIT"):
-                    FirstMoveInvalid = False
+                    self.FirstMoveInvalid = False
                     self.RUNNING = False
-                    self.castlingValidation()
+                    
             if len(self.FirstMove) != 2:
                 continue
+            
             if self.FirstMove.upper() in ("CK","CQ"):
-                FirstMoveInvalid = False
                 self.CastlingEvent = True
-                continue 
-            if self.FirstMove[0].upper() not in ["A","B","C","D","E","F","G","H"] or self.FirstMove[1] not in ["1","2","3","4","5","6","7","8"]:
-                continue
-            self.AlphaLocation = ord(self.FirstMove[0].upper())-65
-            self.NumericalLocation = int(self.FirstMove[1])-1
-            self.FirstPiece = self.PieceArray[self.NumericalLocation][self.AlphaLocation]
+                self.FirstMoveInvalid = False if self.castlingValidation() else True
+                string = "Castling with the seleceted side "+self.FirstMove.upper() if self.FirstMoveInvalid == False else ""
+                
             
-            if (self.FirstPiece[0] == "W" and self.Turn == True) or (self.FirstPiece[0] == "B" and self.Turn == False) or self.FirstPiece == "  ":
+            if self.FirstMove[0].upper() not in ["A","B","C","D","E","F","G","H","C"] or self.FirstMove[1] not in ["1","2","3","4","5","6","7","8","K","Q"]:
                 continue
             
-            confirm = input("The piece you have selected is {} at postion {} enter Y if correct and N if incorrect : ".format(self.FirstPiece,self.FirstMove))
+            if self.FirstMove.upper() not in ("CK","CQ"):
+            
+                self.AlphaLocation = ord(self.FirstMove[0].upper())-65
+                self.NumericalLocation = int(self.FirstMove[1])-1
+                self.FirstPiece = self.PieceArray[self.NumericalLocation][self.AlphaLocation]
+            
+                if (self.FirstPiece[0] == "W" and self.Turn == True) or (self.FirstPiece[0] == "B" and self.Turn == False) or self.FirstPiece == "  ":
+                    continue
+                
+                string = self.FirstPiece+" at postion "+self.FirstMove
+            
+            confirm = input("The piece you have selected is {} enter Y if correct and N if incorrect : ".format(string))
             if not confirm.isalpha() or len(confirm) != 1 :
                 continue
-            if confirm.upper != "Y":
+            if confirm.upper() != "Y":
                 continue
             
-            FirstMoveInvalid = False
+            self.FirstMoveInvalid = False
         
     
     def castlingValidation(self):
         
-        pass
+        Validate = False
+        
+        if self.FirstMove.upper() == "CK" :
+            if self.WhiteKingMove == False and self.WhiteRRMove == False and self.Turn == False :
+                Validate = True
+                
+            if self.WhiteKingMove == False and self.WhiteRRMove == False and self.Turn == True :
+                Validate = True
+                
+        if self.FirstMove.upper() == "CQ" :
+            if self.WhiteKingMove == False and self.WhiteLRMove == False and self.Turn == False :
+                Validate = True
+                
+            if self.WhiteKingMove == False and self.WhiteLRMove == False and self.Turn == True :
+                Validate = True
+            
+        if Validate == True:
+            return True
+        
+        else:
+            return False
+    
          
     def DisplayBoard(self):
         pieces = []
