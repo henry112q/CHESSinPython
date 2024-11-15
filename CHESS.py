@@ -48,11 +48,10 @@ class Main:
                 self.FirstMoveInvalid = False if self.castlingValidation() else True
                 string = "Castling with the seleceted side "+self.moveInput.upper() if self.FirstMoveInvalid == False else ""
                 
-            
-            if self.moveInput[0].upper() not in ["A","B","C","D","E","F","G","H","C"] or self.moveInput[1] not in ["1","2","3","4","5","6","7","8","K","Q"]:
+            if self.moveInput[0].upper() not in ["A","B","C","D","E","F","G","H","C"] or self.moveInput[1] not in ["1","2","3","4","5","6","7","8","K","Q"]: # Checks that each charcter is a valid character at the right location
                 continue
             
-            if self.moveInput.upper() not in ("CK","CQ"):
+            if self.moveInput.upper() not in ("CK","CQ"): # Sorting out data for any other piece
             
                 self.AlphaLocation = ord(self.moveInput[0].upper())-65
                 self.NumericalLocation = int(self.moveInput[1])-1
@@ -111,6 +110,9 @@ class Main:
         while self.RUNNING:
             self.DisplayBoard()
             self.MoveInputs()
+            
+            self.Turn = not self.Turn
+            print(self.Turn)
             
 if __name__ == "__main__":
     Running = Main()
